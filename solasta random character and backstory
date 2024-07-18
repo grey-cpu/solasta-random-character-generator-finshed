@@ -1,0 +1,75 @@
+import random
+
+# Expanded lists of names
+male_first_names = ["Arin", "Brynn", "Cale", "Dara", "Elric", "Fay", "Gavin", "Hale", "Ivor", "Jor", "Kane", "Liam", "Marek", "Nyle", "Owen", "Pike", "Quin", "Reed", "Soren", "Talon", "Uther", "Vance", "Wade", "Xander", "Yorick", "Zane", "Alexander", "Scott"]
+female_first_names = ["Aria", "Brynn", "Cora", "Dara", "Elena", "Faye", "Gwen", "Hara", "Iris", "Jade", "Kara", "Lara", "Maeve", "Nina", "Opal", "Pia", "Quinn", "Rose", "Sara", "Tara", "Ula", "Vera", "Wyn", "Xena", "Yara", "Zara", "Frances", "Lydia", "Violet"]
+last_names = ["Brightwood", "Ironfist", "Stormwind", "Silverleaf", "Swanson", "Darkwood", "Shadowalker", "Fireforge", "Frostblade", "Windrider", "Stonehammer", "Ravenclaw", "Stormbreaker", "Moonshadow", "Duskblade", "Lightbringer"]
+
+# Possible options for each character attribute
+races_classes = {
+    "Human": ["Fighter", "Paladin", "Ranger", "Thief", "Mage"],
+    "Elf": ["Fighter", "Paladin", "Ranger", "Thief", "Mage"],
+    "Half-Elf": ["Fighter", "Paladin", "Ranger", "Thief", "Mage"],
+    "Dwarf": ["Fighter", "Paladin", "Ranger", "Thief", "Mage"],
+    "Halfling": ["Fighter", "Paladin", "Ranger", "Thief", "Mage"]
+}
+alignments = ["Lawful Good", "Neutral Good", "Chaotic Good", "Lawful Neutral", "True Neutral", "Chaotic Neutral", "Lawful Evil", "Neutral Evil", "Chaotic Evil"]
+
+skills = ["Acrobatics", "Animal Handling", "Arcana", "Athletics", "Deception", "History", "Insight", "Intimidation", "Investigation", "Medicine", "Nature", "Perception", "Performance", "Persuasion", "Religion", "Sleight of Hand", "Stealth", "Survival"]
+
+def roll_ability_scores():
+    return sum(sorted(random.choices(range(1, 7), k=4))[1:])
+
+def generate_name():
+    gender = random.choice(["male", "female"])
+    first_name = random.choice(male_first_names if gender == "male" else female_first_names)
+    last_name = random.choice(last_names)
+    return f"{first_name} {last_name}"
+
+def generate_backstory(character):
+    name = character["Name"]
+    race = character["Race"]
+    char_class = character["Class"]
+    alignment = character["Alignment"]
+    
+    backstories = [
+        f"{name} was born in the kingdom of Eidelon, where they trained as a {char_class.lower()} to defend their homeland from the encroaching darkness. Their mastery of {skills[0]} and {skills[1]} earned them the respect of their peers and the admiration of their superiors. Their journey began when they uncovered a plot to assassinate the king, implicating high-ranking nobles in a conspiracy that threatened to plunge the realm into chaos. With {skills[2]} and {skills[3]} at their disposal, {name} embarked on a quest for justice, unraveling a web of deceit that spanned across rival factions and shadowy guilds. Along the way, they forged alliances with unlikely allies and earned a reputation as a hero of the realm.",
+        f"Raised among the nomadic tribes of the Badlands, {name} learned the ways of the {char_class.lower()} from a young age. Their skill in {skills[4]} and {skills[5]} marked them as a formidable warrior and a trusted ally. Their journey began when they received a vision from the spirits of their ancestors, urging them to seek out the lost city of Solasta. Guided by the whispers of the wind and the wisdom of the elders, {name} set out on a perilous journey across the desert sands, battling sandstorms and rival clans along the way. Now, they stand at the gates of the ancient city, ready to uncover its secrets and reclaim their place among the legends of old.",
+        f"{name} was born in the bustling port city of Vardonia, where trade routes converge and secrets abound. Trained as a {char_class.lower()}, they honed their skills in {skills[6]} and {skills[7]}, navigating the treacherous waters of diplomacy and espionage. Their journey began when they uncovered a plot to overthrow the ruling council, implicating powerful merchants in a conspiracy that threatened to plunge the city into chaos. Armed with {skills[8]} and {skills[9]}, {name} embarked on a quest for truth, delving into forbidden archives and confronting corrupt officials. Along the way, they forged alliances with unlikely allies and earned a reputation as a champion of the downtrodden.",
+        f"Born under the watchful gaze of the sacred oak trees in the heart of the Deepwood, {name} was destined for greatness as a {char_class.lower()}. Their affinity for nature and the spirits of the forest marked them as a chosen champion of the land. Their journey began when they received a vision from the ancient druids, urging them to embark on a pilgrimage to the sacred groves of Solasta. Along the way, {name} communed with the spirits of the wild and confronted the forces of corruption that threatened to desecrate the ancient groves. Now, they stand as a guardian of the natural world, wielding their {skills[10]} and {skills[11]} to protect the balance between civilization and the wilds.",
+        f"{name} grew up in the sprawling metropolis of Stormreach, where the towering spires of the Arcane Academy loom over the cityscape. Trained as a {char_class.lower()}, they excelled in both the arcane arts of {skills[12]} and the martial techniques of {skills[13]}. Their journey began when they uncovered a forbidden tome that revealed the existence of a lost artifact, said to hold the power to reshape reality itself. With {skills[14]} and {skills[15]} at their disposal, {name} embarked on a quest for knowledge, traversing ancient ruins and battling rival scholars in pursuit of the artifact. Along the way, they encountered elemental guardians and spectral wraiths who tested their intellect and resolve.",
+        f"Born into a noble family in the kingdom of Galladia, {name} was groomed for a life of privilege and power. Trained as a {char_class.lower()}, they studied the ancient traditions of {skills[16]} and {skills[17]}, mastering the arts of diplomacy and statecraft. Their journey began when they uncovered a conspiracy that implicated high-ranking officials in a plot to usurp the throne. With {skills[18]} and {skills[19]} at their disposal, {name} embarked on a quest for justice, navigating the treacherous waters of court intrigue and political betrayal. Along the way, they forged alliances with rival factions and earned a reputation as a cunning strategist and a champion of the realm."
+    ]
+    return random.choice(backstories) + f" They are a {alignment.lower()} {race.lower()}."
+
+def generate_character():
+    race = random.choice(list(races_classes.keys()))
+    char_class = random.choice(races_classes[race])
+    alignment = random.choice(alignments)
+    name = generate_name()
+    
+    character = {
+        "Name": name,
+        "Race": race,
+        "Class": char_class,
+        "Alignment": alignment,
+        "Strength": roll_ability_scores(),
+        "Dexterity": roll_ability_scores(),
+        "Constitution": roll_ability_scores(),
+        "Intelligence": roll_ability_scores(),
+        "Wisdom": roll_ability_scores(),
+        "Charisma": roll_ability_scores(),
+        "Skills": random.sample(skills, 3),
+        "Backstory": generate_backstory({
+            "Name": name,
+            "Race": race,
+            "Class": char_class,
+            "Alignment": alignment
+        })
+    }
+    return character
+
+# Generate and print a character
+character = generate_character()
+for attribute, value in character.items():
+    print(f"{attribute}: {value}")
